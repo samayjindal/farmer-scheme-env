@@ -13,8 +13,8 @@ def run_agent():
 
     for step in range(3):
         obs = env.reset()
-        query = obs["query"].lower()
-
+        query = obs["observation"]["query"].lower()
+        
         if "damage" in query or "rain" in query:
             scheme = "Crop Insurance"
             explanation = "Farmers get help if crop is damaged"
