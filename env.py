@@ -3,32 +3,21 @@ import random
 class FarmerSchemeEnv:
     def __init__(self):
         self.tasks = [
-            {
-                "query": "I need money help",
-                "answer": "Kisan Credit Card"
-            },
-            {
-                "query": "My crop got damaged due to rain",
-                "answer": "Crop Insurance"
-            },
-            {
-                "query": "I have small land and need financial support",
-                "answer": "PM Kisan"
-            }
+            {"query": "I need money help", "answer": "Kisan Credit Card"},
+            {"query": "My crop got damaged due to rain", "answer": "Crop Insurance"},
+            {"query": "I have small land and need financial support", "answer": "PM Kisan"}
         ]
         self.current_task = None
 
     def reset(self):
         self.current_task = random.choice(self.tasks)
         return {
-            "observation": {
-                "query": self.current_task["query"]
-            }
+            "query": self.current_task["query"]
         }
 
     def step(self, action):
-        reward = 0
         correct = self.current_task["answer"]
+        reward = 0
 
         if action.get("scheme", "").lower() == correct.lower():
             reward += 1
@@ -45,14 +34,12 @@ class FarmerSchemeEnv:
 
         done = True
 
-        return {
-            "observation": {
-                "query": self.current_task["query"]
-            },
-            "reward": reward,
-            "done": done,
-            "info": {}
-        }
+        return (
+            {"query": self.current_task["query"]},
+            reward,
+            done,
+            {}
+        )
 
     def state(self):
         return {
