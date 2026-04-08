@@ -30,7 +30,8 @@ def run_agent():
             "explanation": explanation
         }
 
-        _, reward, _, _ = env.step(action)
+        result = env.step(action)
+        reward = result["reward"]
         total_reward += reward
 
         print(f"STEP {step+1}: reward={reward}")
