@@ -13,7 +13,7 @@ def run_agent():
 
     for step in range(3):
         obs = env.reset()
-        query = obs["observation"]["query"].lower()
+        query = obs["query"].lower()
         
         if "damage" in query or "rain" in query:
             scheme = "Crop Insurance"
@@ -30,8 +30,7 @@ def run_agent():
             "explanation": explanation
         }
 
-        result = env.step(action)
-        reward = result["reward"]
+        obs, reward, done, _ = env.step(action)
         total_reward += reward
 
         print(f"STEP {step+1}: reward={reward}")
