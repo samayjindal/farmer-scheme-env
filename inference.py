@@ -3,16 +3,18 @@ from env import FarmerSchemeEnv
 
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
+HF_TOKEN = os.getenv("HF_TOKEN")
 
 def run_agent():
+    print("START")
+
     env = FarmerSchemeEnv()
     total_reward = 0
 
-    for _ in range(3):
+    for step in range(3):
         obs = env.reset()
         query = obs["query"].lower()
 
-        # Smart rule-based agent
         if "damage" in query or "rain" in query:
             scheme = "Crop Insurance"
             explanation = "Farmers get help if crop is damaged"
@@ -31,6 +33,9 @@ def run_agent():
         _, reward, _, _ = env.step(action)
         total_reward += reward
 
+        print(f"STEP {step+1}: reward={reward}")
+
+    print("END")
     print("Final Score:", total_reward)
 
 
