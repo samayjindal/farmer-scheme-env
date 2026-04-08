@@ -4,11 +4,9 @@ version = "0.1.0"
 description = "AI environment for farmer scheme recommendation"
 authors = [{name = "Samay Jindal"}]
 dependencies = [
-  "fastapi",
-  "uvicorn",
   "pydantic",
   "openenv>=0.2.0"
 ]
 
 [project.scripts]
-server = "env:app"
+server = "server.app:main"
