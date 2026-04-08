@@ -1,47 +1,50 @@
 import random
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-class FarmerSchemeEnv:
-    def __init__(self):
-        self.tasks = [
-            {"query": "I need money help", "answer": "Kisan Credit Card"},
-            {"query": "My crop got damaged due to rain", "answer": "Crop Insurance"},
-            {"query": "I have small land and need financial support", "answer": "PM Kisan"}
-        ]
-        self.current_task = None
+app = FastAPI()
 
-    def reset(self):
-        self.current_task = random.choice(self.tasks)
-        return {
-            "query": self.current_task["query"]
-        }
+class Action(BaseModel):
+    scheme: str
+    explanation: str
 
-    def step(self, action):
-        correct = self.current_task["answer"]
-        reward = 0
+tasks = [
+    {"query": "I need money help", "answer": "Kisan Credit Card"},
+    {"query": "My crop got damaged due to rain", "answer": "Crop Insurance"},
+    {"query": "I have small land and need financial support", "answer": "PM Kisan"}
+]
 
-        if action.get("scheme", "").lower() == correct.lower():
-            reward += 1
-        else:
-            reward -= 1
+current_task = {}
 
-        explanation = action.get("explanation", "")
+@app.post("/reset")
+def reset():
+    global current_task
+    current_task = random.choice(tasks)
+    return {"query": current_task["query"]}
 
-        if len(explanation.split()) <= 12:
-            reward += 0.5
+@app.post("/step")
+def step(action: Action):
+    correct = current_task["answer"]
+    reward = 0
 
-        if "farmer" in explanation.lower():
-            reward += 0.2
+    if action.scheme.lower() == correct.lower():
+        reward += 1
+    else:
+        reward -= 1
 
-        done = True
+    if len(action.explanation.split()) <= 12:
+        reward += 0.5
 
-        return (
-            {"query": self.current_task["query"]},
-            reward,
-            done,
-            {}
-        )
+    if "farmer" in action.explanation.lower():
+        reward += 0.2
 
-    def state(self):
-        return {
-            "query": self.current_task["query"] if self.current_task else ""
-        }
+    return {
+        "observation": {"query": current_task["query"]},
+        "reward": reward,
+        "done": True,
+        "info": {}
+    }
+
+@app.get("/state")
+def state():
+    return current_task
