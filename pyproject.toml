@@ -1,7 +1,8 @@
 [project]
 name = "farmer-scheme-env"
 version = "0.1.0"
-dependencies = ["openenv>=0.2.0"]
+description = "AI environment for farmer scheme recommendation"
+authors = [{ name = "Samay Jindal" }]
 
-[tool.openenv]
-entry_point = "env:app"
+[project.scripts]
+server = "server.app:main"
