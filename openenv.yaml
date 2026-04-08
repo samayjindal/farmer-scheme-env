@@ -3,7 +3,7 @@ description: AI environment for farmer scheme recommendation
 version: "1.0"
 
 environment:
-  entry_point: server.app:main
+  entry_point: env:app
 
 observation_space:
   type: object
@@ -26,9 +26,7 @@ reward:
 tasks:
   - id: easy
     description: Basic financial help
-
   - id: medium
     description: Crop damage
-
   - id: hard
     description: Multi-condition query
