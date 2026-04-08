@@ -1,11 +1,9 @@
 name: FarmerSchemeEnv
-
-description: AI environment to simulate farmer queries and recommend schemes
-
+description: AI environment for farmer scheme recommendation
 version: "1.0"
 
 environment:
-  entry_point: env:app
+  entry_point: server.app:main
 
 observation_space:
   type: object
@@ -27,10 +25,10 @@ reward:
 
 tasks:
   - id: easy
-    description: Basic financial help query
+    description: Basic financial help
 
   - id: medium
-    description: Crop damage query
+    description: Crop damage
 
   - id: hard
-    description: Multi-condition farmer query
+    description: Multi-condition query
