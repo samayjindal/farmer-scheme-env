@@ -1,0 +1,32 @@
+name: FarmerSchemeEnv
+
+description: AI environment to simulate farmer queries and recommend government schemes
+
+observation_space:
+  type: object
+  properties:
+    query:
+      type: string
+
+action_space:
+  type: object
+  properties:
+    scheme:
+      type: string
+    explanation:
+      type: string
+
+reward_range: [-1, 1.7]
+
+tasks:
+  - name: Easy Task
+    difficulty: easy
+    description: Basic financial help query
+
+  - name: Medium Task
+    difficulty: medium
+    description: Crop damage scenario
+
+  - name: Hard Task
+    difficulty: hard
+    description: Multi-condition farmer query
