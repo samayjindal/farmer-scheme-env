@@ -2,9 +2,13 @@
 name = "farmer-scheme-env"
 version = "0.1.0"
 description = "AI environment for farmer scheme recommendation"
-authors = [
-  {name = "Samay Jindal"}
+authors = [{name = "Samay Jindal"}]
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic",
+  "openenv>=0.2.0"
 ]
 
-[tool.openenv]
-entry_point = "env:app"
+[project.scripts]
+server = "env:app"
